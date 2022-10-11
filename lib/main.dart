@@ -42,6 +42,12 @@ class MyApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
+      scrollBehavior: MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+        },
+      ),
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
