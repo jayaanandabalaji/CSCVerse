@@ -42,8 +42,7 @@ dependencies:
   extended_image:
   top_snackbar_flutter:
   imageview360:
-  webview_flutter_web:
-  webview_flutter:
+  easy_web_view:
 
 dev_dependencies:
   flutter_test:

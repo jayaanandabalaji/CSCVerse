@@ -1,3 +1,4 @@
+import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:developer';
 
@@ -40,15 +41,16 @@ class _gameWebviewScreenState extends State<gameWebviewScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          WebViewX(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            initialContent:
-                'http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}',
-            initialSourceType: SourceType.url,
-            onWebViewCreated: (controller) {
-              webviewController = controller;
-            },
+          EasyWebView(
+            src:
+                "http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}",
+
+            isHtml: false, // Use Html syntax
+            isMarkdown: false, // Use markdown syntax
+            convertToWidgets: false, // Try to convert to flutter widgets
+            // width: 100,
+            // height: 100,
+            onLoaded: () {},
           ),
           if (!kIsWeb)
             Align(

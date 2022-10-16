@@ -4,6 +4,8 @@ import 'package:cscchallenge/screens/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart';
 
@@ -83,13 +85,20 @@ class _connectAccountState extends State<connectAccount> {
                             await SharedPreferences.getInstance();
                         prefs.setString("key", wallet.text);
                         await connectAccountContract();
-                      } catch (e) {
-                        log("error occured");
-                        log(e.toString());
-                      } finally {
                         Navigator.of(context).pushReplacement(
                             new MaterialPageRoute(
                                 builder: (context) => homeScreen()));
+                      } catch (e) {
+                        log("error occured");
+                        showTopSnackBar(
+                          context,
+                          CustomSnackBar.error(
+                            backgroundColor: Colors.yellow,
+                            message: e.toString(),
+                          ),
+                        );
+                        log(e.toString());
+                      } finally {
                         EasyLoading.dismiss();
                       }
                     })
