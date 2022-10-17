@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:developer';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -37,6 +40,20 @@ class _gameWebviewScreenState extends State<gameWebviewScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // ignore: undefined_prefixed_name
+    ui.platformViewRegistry.registerViewFactory('game', (int viewId) {
+      return IFrameElement()
+        ..style.width = '100%'
+        ..style.height = '100%'
+        ..src =
+            'http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}'
+        ..style.border = 'none';
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -44,21 +61,7 @@ class _gameWebviewScreenState extends State<gameWebviewScreen> {
           Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: EasyWebView(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                src:
-                    '''<iframe src="http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
-    Your browser doesn't support iframes
-</iframe>''',
-
-                isHtml: true, // Use Html syntax
-                isMarkdown: false, // Use markdown syntax
-                convertToWidgets: false, // Try to convert to flutter widgets
-                // width: 100,
-                // height: 100,
-                onLoaded: () {},
-              )),
+              child: HtmlElementView(viewType: 'game')),
           if (!kIsWeb)
             Align(
               alignment: Alignment.bottomLeft,
