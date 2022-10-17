@@ -41,17 +41,24 @@ class _gameWebviewScreenState extends State<gameWebviewScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          EasyWebView(
-            src:
-                "http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}",
+          Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: EasyWebView(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                src:
+                    '''<iframe src="http://test4.digitalbloging.com/T3/index.html?color=${getColorHex()}&specular=${getColorHex()}" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+    Your browser doesn't support iframes
+</iframe>''',
 
-            isHtml: false, // Use Html syntax
-            isMarkdown: false, // Use markdown syntax
-            convertToWidgets: false, // Try to convert to flutter widgets
-            // width: 100,
-            // height: 100,
-            onLoaded: () {},
-          ),
+                isHtml: true, // Use Html syntax
+                isMarkdown: false, // Use markdown syntax
+                convertToWidgets: false, // Try to convert to flutter widgets
+                // width: 100,
+                // height: 100,
+                onLoaded: () {},
+              )),
           if (!kIsWeb)
             Align(
               alignment: Alignment.bottomLeft,
